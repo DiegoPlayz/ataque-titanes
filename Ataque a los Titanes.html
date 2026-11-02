@@ -1,0 +1,1105 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Ataque a los Titanes</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Concepto: expediente militar sobre piedra. Una cabecera fija, secciones separadas
+   por trazos finos como los anillos de los muros, y un solo acento verde capa. */
+:root {
+  --bg: #e8eae4;
+  --surface: #f3f4ef;
+  --wall: #d3d8ca;
+  --fg: #171d16;
+  --muted: #566052;
+  --line: #c3c9bb;
+  --accent: #3d6a33;
+  --accent-ink: #f3f4ef;
+  --rust: #9b3b27;
+
+  --f-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --f-body: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1310;
+    --surface: #171c18;
+    --wall: #222923;
+    --fg: #e3e8dc;
+    --muted: #94a08e;
+    --line: #2a322b;
+    --accent: #93c27d;
+    --accent-ink: #0f1310;
+    --rust: #e07a5f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1310;
+  --surface: #171c18;
+  --wall: #222923;
+  --fg: #e3e8dc;
+  --muted: #94a08e;
+  --line: #2a322b;
+  --accent: #93c27d;
+  --accent-ink: #0f1310;
+  --rust: #e07a5f;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 6.5rem; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--f-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 30;
+  background: var(--bg);
+}
+h1, h2, h3 { font-family: var(--f-display); text-transform: uppercase; text-wrap: balance; margin: 0; font-weight: 800; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+.wrap {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Cabecera */
+.top {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 20;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.top-in {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding-block: 0.6rem;
+}
+.marca {
+  font-family: var(--f-display);
+  font-weight: 900;
+  font-size: 1.35rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.btn-tema {
+  font: 500 0.75rem var(--f-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--line);
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+}
+.btn-tema:hover { border-color: var(--accent); }
+.nav {
+  order: 3;
+  flex: 1 1 100%;
+  min-width: 0;
+  display: flex;
+  gap: 1.1rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-block: 0.2rem;
+}
+.nav::-webkit-scrollbar { display: none; }
+.nav a {
+  flex: none;
+  font-family: var(--f-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--muted);
+  padding-block: 0.35rem;
+  border-bottom: 2px solid transparent;
+}
+.nav a:hover { color: var(--fg); border-bottom-color: var(--accent); }
+@media (min-width: 62rem) {
+  .nav { order: 0; flex: 0 1 auto; margin-left: auto; margin-right: 1rem; }
+  .top-in { flex-wrap: nowrap; }
+  .btn-tema { order: 4; }
+}
+
+/* Portada */
+.hero { padding-block: clamp(2.5rem, 6vw, 5rem); }
+.hero-in {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+.hero-txt { min-width: 0; display: grid; gap: 1.25rem; }
+h1 {
+  font-weight: 900;
+  font-size: clamp(3.2rem, 10vw, 7.4rem);
+  line-height: 0.88;
+  letter-spacing: -0.005em;
+}
+.lead { font-size: 1.2rem; max-width: 38rem; color: var(--fg); }
+.acciones { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.btn {
+  display: inline-block;
+  font-family: var(--f-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid var(--fg);
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+}
+.btn:hover { background: var(--fg); color: var(--bg); }
+.btn-p { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn-p:hover { background: var(--fg); border-color: var(--fg); color: var(--bg); }
+
+.rapidos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0;
+  margin: 0.5rem 0 0;
+  border-top: 1px solid var(--fg);
+}
+.rapidos div { padding: 0.7rem 0.9rem 0.7rem 0; border-bottom: 1px solid var(--line); }
+.rapidos dt {
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.rapidos dd { margin: 0.1rem 0 0; font-weight: 600; }
+
+.mapa { margin: 0; min-width: 0; }
+.mapa svg { display: block; width: 100%; max-width: 30rem; margin-inline: auto; height: auto; }
+.mapa figcaption {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.anillos circle { stroke: var(--accent); stroke-width: 6; transform-box: fill-box; transform-origin: center; animation: crece 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.m-maria { fill: var(--wall); }
+.m-rose { fill: var(--surface); animation-delay: 0.12s !important; }
+.m-sina { fill: var(--wall); animation-delay: 0.24s !important; }
+@keyframes crece { from { transform: scale(0.9); opacity: 0.35; } to { transform: scale(1); opacity: 1; } }
+.punto { fill: var(--rust); }
+.et {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  fill: var(--fg);
+  paint-order: stroke;
+  stroke: var(--bg);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+.et-c { font-size: 12px; fill: var(--accent); }
+.et-s { fill: var(--rust); font-size: 10px; stroke: var(--bg); }
+
+@media (max-width: 52rem) {
+  .hero-in { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Secciones */
+.sec { border-top: 1px solid var(--line); padding-block: clamp(3rem, 7vw, 5.5rem); }
+.sec .wrap { display: grid; gap: 1rem; }
+h2 { font-size: clamp(2.1rem, 5.5vw, 3.6rem); line-height: 0.95; }
+h3 { font-size: 1.7rem; line-height: 1; letter-spacing: 0.01em; }
+.intro-sec { max-width: 42rem; color: var(--muted); }
+
+.muros { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 0; margin-top: 1rem; border-top: 1px solid var(--fg); }
+.muro { padding: 1.2rem 1.4rem 1.4rem 0; display: grid; gap: 0.5rem; align-content: start; }
+.muro + .muro { padding-left: 1.4rem; border-left: 1px solid var(--line); }
+@media (max-width: 52rem) {
+  .muro + .muro { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+}
+
+/* Personajes */
+.controles { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: end; margin-top: 0.5rem; }
+.campo { display: grid; gap: 0.35rem; min-width: 0; }
+.campo-ancho { max-width: 42rem; }
+label { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+input[type="search"], textarea {
+  font: inherit;
+  color: var(--fg);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 0.65rem 0.8rem;
+  width: 100%;
+  min-width: 0;
+}
+input[type="search"] { min-width: 14rem; }
+textarea { resize: vertical; line-height: 1.5; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.chip {
+  font: 500 0.78rem var(--f-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+}
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.interruptor { display: inline-flex; align-items: center; gap: 0.55rem; cursor: pointer; padding-block: 0.55rem; }
+.interruptor input { width: 1.15rem; height: 1.15rem; accent-color: var(--accent); margin: 0; }
+.interruptor span { color: var(--fg); }
+.conteo { font-family: var(--f-mono); font-size: 0.78rem; color: var(--muted); }
+
+.rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr)); gap: 1rem; margin-top: 0.5rem; }
+.ficha, .titan {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 1.15rem 1.2rem 1.3rem;
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  min-width: 0;
+}
+.ficha[hidden] { display: none; }
+.grupo {
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  justify-self: start;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid currentColor;
+}
+.g-expl { color: var(--accent); }
+.g-marley { color: var(--rust); }
+.rol { font-family: var(--f-mono); font-size: 0.78rem; color: var(--muted); }
+.spoiler {
+  display: none;
+  border-top: 1px dashed var(--line);
+  padding-top: 0.6rem;
+  margin-top: 0.2rem;
+  font-size: 0.97rem;
+}
+.spoiler b {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 0.15rem;
+}
+.con-spoilers .spoiler { display: block; }
+.vacio { color: var(--muted); padding-block: 1rem; }
+
+.titanes { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); gap: 1rem; margin-top: 0.5rem; }
+
+/* Escala */
+.escala { display: grid; grid-template-columns: 2.4rem minmax(0, 1fr); column-gap: 0.5rem; margin: 2.2rem 0 3.5rem; max-width: 46rem; }
+.ejey { position: relative; height: 18rem; }
+.ejey span { position: absolute; right: 0; transform: translateY(50%); font-family: var(--f-mono); font-size: 0.72rem; color: var(--muted); }
+.plano { position: relative; height: 18rem; border-left: 1px solid var(--fg); border-bottom: 1px solid var(--fg); }
+.guia { position: absolute; left: 0; right: 0; border-top: 1px solid var(--line); }
+.muro-linea { position: absolute; left: 0; right: 0; border-top: 2px dashed var(--rust); z-index: 2; }
+.muro-linea span { position: absolute; right: 0; bottom: 0.3rem; font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.08em; color: var(--rust); background: var(--bg); padding: 0 0.3rem; }
+.barras { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: space-around; gap: 0.4rem; padding-inline: 0.5rem; }
+.barra { position: relative; flex: 1 1 0; min-width: 0; max-width: 4.6rem; height: var(--h); background: var(--accent); z-index: 1; }
+.barra.sobre { background: var(--rust); }
+.barra b { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); padding-bottom: 0.2rem; font-family: var(--f-mono); font-size: 0.75rem; font-weight: 500; white-space: nowrap; }
+.barra span { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 0.45rem; width: max-content; max-width: 4.6rem; text-align: center; font-size: 0.78rem; line-height: 1.2; }
+
+/* Cronología */
+.linea { list-style: none; margin: 0.5rem 0 0; padding: 0; border-top: 1px solid var(--fg); }
+.linea li { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 1rem; padding-block: 1rem; border-bottom: 1px solid var(--line); }
+.anio { font-family: var(--f-display); font-weight: 900; font-size: 2.2rem; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+.mes { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+/* Quiz */
+.quiz { background: var(--surface); border: 1px solid var(--line); padding: clamp(1.1rem, 3vw, 2rem); max-width: 46rem; display: grid; gap: 1rem; }
+.q-prog { font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; gap: 1rem; }
+.q-barra { height: 4px; background: var(--line); }
+.q-barra i { display: block; height: 100%; background: var(--accent); }
+.q-p { font-family: var(--f-display); font-weight: 800; font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.05; text-transform: none; text-wrap: balance; }
+.q-ops { display: grid; gap: 0.6rem; }
+.q-op {
+  text-align: left;
+  font: inherit;
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+}
+.q-op:hover:not(:disabled) { border-color: var(--accent); }
+.q-op:disabled { cursor: default; }
+.q-op.ok { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.q-op.mal { border-color: var(--rust); color: var(--rust); font-weight: 600; }
+.q-nota { color: var(--muted); font-size: 0.97rem; }
+.q-fila { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+.q-final { display: grid; gap: 0.6rem; }
+.q-rango { font-family: var(--f-display); font-weight: 900; font-size: clamp(2.6rem, 8vw, 4.4rem); line-height: 0.9; text-transform: uppercase; color: var(--accent); }
+
+/* Bitácora */
+.estado { font-family: var(--f-mono); font-size: 0.75rem; color: var(--muted); min-height: 1.2em; }
+
+.pie { border-top: 1px solid var(--fg); padding-block: 2rem 3rem; color: var(--muted); font-size: 0.9rem; }
+.pie p { max-width: 46rem; }
+
+@media (max-width: 30rem) {
+  .linea li { grid-template-columns: 4rem minmax(0, 1fr); gap: 0.75rem; }
+  .anio { font-size: 1.7rem; }
+  .barra span { font-size: 0.7rem; max-width: 3.6rem; }
+  .escala { margin-bottom: 4rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .anillos circle { animation: none; }
+}
+
+</style>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="marca" href="#inicio">Ataque a los Titanes</a>
+    <button id="tema" class="btn-tema" type="button" aria-label="Cambiar entre tema claro y oscuro">Tema</button>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#muros">Muros</a>
+      <a href="#personajes">Personajes</a>
+      <a href="#titanes">Titanes</a>
+      <a href="#escala">Escala</a>
+      <a href="#cronologia">Cronología</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#bitacora">Bitácora</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section id="inicio" class="hero">
+  <div class="wrap hero-in">
+    <div class="hero-txt">
+      <p class="eyebrow">Shingeki no Kyojin · 進撃の巨人</p>
+      <h1>Ataque a los Titanes</h1>
+      <p class="lead">Hace más de cien años, los titanes llevaron a la humanidad al borde de la extinción. Los sobrevivientes se refugiaron tras tres muros concéntricos de 50 metros de altura. En el año 845, un titán que supera esa altura abre una brecha en el muro exterior.</p>
+      <div class="acciones">
+        <a class="btn btn-p" href="#personajes">Conocer a los personajes</a>
+        <a class="btn" href="#quiz">Hacer el quiz</a>
+      </div>
+      <dl class="rapidos">
+        
+        <div><dt>Autor</dt><dd>Hajime Isayama</dd></div>
+        
+        <div><dt>Manga</dt><dd>2009 – 2021 · 34 tomos</dd></div>
+        
+        <div><dt>Anime</dt><dd>2013 – 2023</dd></div>
+        
+        <div><dt>Estudios</dt><dd>Wit Studio y MAPPA</dd></div>
+        
+        <div><dt>Editorial</dt><dd>Kodansha</dd></div>
+        
+      </dl>
+    </div>
+
+    <figure class="mapa">
+      <svg viewBox="0 0 400 412" role="img" aria-labelledby="mapa-t mapa-d">
+        <title id="mapa-t">Los tres muros</title>
+        <desc id="mapa-d">Esquema de los tres muros concéntricos: María por fuera, Rose en el medio y Sina por dentro, con la capital Mitras al centro.</desc>
+        <g class="anillos">
+          <circle class="m-maria" cx="200" cy="200" r="176"/>
+          <circle class="m-rose" cx="200" cy="200" r="118"/>
+          <circle class="m-sina" cx="200" cy="200" r="60"/>
+        </g>
+        <circle class="punto" cx="200" cy="376" r="5"/>
+        <circle class="punto" cx="200" cy="318" r="5"/>
+        <text class="et" x="200" y="24" text-anchor="middle">MURO MARÍA</text>
+        <text class="et" x="200" y="82" text-anchor="middle">MURO ROSE</text>
+        <text class="et" x="200" y="140" text-anchor="middle">MURO SINA</text>
+        <text class="et et-c" x="200" y="205" text-anchor="middle">MITRAS</text>
+        <text class="et et-s" x="200" y="402" text-anchor="middle">SHIGANSHINA</text>
+        <text class="et et-s" x="200" y="304" text-anchor="middle">TROST</text>
+      </svg>
+      <figcaption>Cada muro mide 50 metros de altura.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="muros" class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Geografía</p>
+    <h2>Tres muros, un mismo miedo</h2>
+    <div class="muros">
+      
+      <article class="muro">
+        <p class="eyebrow">Exterior</p>
+        <h3>Muro María</h3>
+        <p>El más grande y el primero en caer, en el año 845. Su distrito sur es Shiganshina.</p>
+      </article>
+      
+      <article class="muro">
+        <p class="eyebrow">Intermedio</p>
+        <h3>Muro Rose</h3>
+        <p>Protege la zona central del reino. Su distrito sur, Trost, sufre un ataque en el año 850.</p>
+      </article>
+      
+      <article class="muro">
+        <p class="eyebrow">Interior</p>
+        <h3>Muro Sina</h3>
+        <p>El último refugio. Dentro de él están la capital, Mitras, y la nobleza.</p>
+      </article>
+      
+    </div>
+  </div>
+</section>
+
+<section id="personajes" class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Reparto</p>
+    <h2>Personajes</h2>
+
+    <div class="controles">
+      <div class="campo">
+        <label for="buscar">Buscar por nombre</label>
+        <input id="buscar" type="search" placeholder="Por ejemplo: Levi" autocomplete="off">
+      </div>
+      <div class="chips" role="group" aria-label="Filtrar por grupo">
+        <button type="button" class="chip" data-grupo="" aria-pressed="true">Todos</button>
+        
+        <button type="button" class="chip" data-grupo="Cuerpo de Exploración" aria-pressed="false">Cuerpo de Exploración</button>
+        
+        <button type="button" class="chip" data-grupo="Marley" aria-pressed="false">Marley</button>
+        
+      </div>
+      <label class="interruptor" for="spoilers">
+        <input id="spoilers" type="checkbox">
+        <span>Mostrar spoilers</span>
+      </label>
+    </div>
+    <p id="conteo" class="conteo" aria-live="polite"></p>
+
+    <div id="rejilla" class="rejilla">
+      
+      <article class="ficha" data-nombre="eren jaeger" data-grupo="Cuerpo de Exploración">
+        <p class="grupo g-expl">Cuerpo de Exploración</p>
+        <h3>Eren Jaeger</h3>
+        <p class="rol">Recluta, luego soldado</p>
+        <p>Joven de Shiganshina que jura exterminar a los titanes después de la caída del Muro María.</p>
+        
+        <p class="spoiler"><b>Spoiler</b>Es portador del Titán de Ataque, y su postura frente al mundo exterior cambia por completo en la temporada final.</p>
+        
+      </article>
+      
+      <article class="ficha" data-nombre="mikasa ackerman" data-grupo="Cuerpo de Exploración">
+        <p class="grupo g-expl">Cuerpo de Exploración</p>
+        <h3>Mikasa Ackerman</h3>
+        <p class="rol">Soldado de élite</p>
+        <p>Hija adoptiva de la familia Jaeger. Destaca por su habilidad en combate y su lealtad a Eren.</p>
+        
+        <p class="spoiler"><b>Spoiler</b>Su apellido pertenece a un linaje con una fuerza física fuera de lo común.</p>
+        
+      </article>
+      
+      <article class="ficha" data-nombre="armin arlert" data-grupo="Cuerpo de Exploración">
+        <p class="grupo g-expl">Cuerpo de Exploración</p>
+        <h3>Armin Arlert</h3>
+        <p class="rol">Estratega</p>
+        <p>Amigo de infancia de Eren. Resuelve problemas con ingenio y sueña con ver el mar.</p>
+        
+        <p class="spoiler"><b>Spoiler</b>Hereda el poder del Titán Colosal.</p>
+        
+      </article>
+      
+      <article class="ficha" data-nombre="levi ackerman" data-grupo="Cuerpo de Exploración">
+        <p class="grupo g-expl">Cuerpo de Exploración</p>
+        <h3>Levi Ackerman</h3>
+        <p class="rol">Capitán</p>
+        <p>Capitán del Escuadrón de Operaciones Especiales, considerado el soldado más fuerte de la humanidad.</p>
+        
+        <p class="spoiler"><b>Spoiler</b>A lo largo de la historia pierde a casi todo su escuadrón original y a su comandante.</p>
+        
+      </article>
+      
+      <article class="ficha" data-nombre="erwin smith" data-grupo="Cuerpo de Exploración">
+        <p class="grupo g-expl">Cuerpo de Exploración</p>
+        <h3>Erwin Smith</h3>
+        <p class="rol">Comandante</p>
+        <p>Comandante del Cuerpo de Exploración. Está dispuesto a arriesgarlo todo para descubrir la verdad del mundo.</p>
+        
+        <p class="spoiler"><b>Spoiler</b>Su decisión durante el asalto a Shiganshina define su destino.</p>
+        
+      </article>
+      
+      <article class="ficha" data-nombre="hange zoë" data-grupo="Cuerpo de Exploración">
+        <p class="grupo g-expl">Cuerpo de Exploración</p>
+        <h3>Hange Zoë</h3>
+        <p class="rol">Líder de escuadrón e investigadora</p>
+        <p>Obsesionada con estudiar a los titanes. Combina curiosidad científica y mucho entusiasmo.</p>
+        
+        <p class="spoiler"><b>Spoiler</b>Asume el mando del Cuerpo de Exploración después de Erwin.</p>
+        
+      </article>
+      
+      <article class="ficha" data-nombre="jean kirstein" data-grupo="Cuerpo de Exploración">
+        <p class="grupo g-expl">Cuerpo de Exploración</p>
+        <h3>Jean Kirstein</h3>
+        <p class="rol">Soldado</p>
+        <p>Cadete de la promoción 104. Franco y competitivo, empezó queriendo unirse a la Policía Militar.</p>
+        
+        <p class="spoiler"><b>Spoiler</b>Termina asumiendo un papel de líder en los momentos más críticos.</p>
+        
+      </article>
+      
+      <article class="ficha" data-nombre="connie springer" data-grupo="Cuerpo de Exploración">
+        <p class="grupo g-expl">Cuerpo de Exploración</p>
+        <h3>Connie Springer</h3>
+        <p class="rol">Soldado</p>
+        <p>Cadete de la promoción 104 conocido por su velocidad y su humor.</p>
+        
+        <p class="spoiler"><b>Spoiler</b>El secreto de su aldea natal es uno de los giros de la tercera temporada.</p>
+        
+      </article>
+      
+      <article class="ficha" data-nombre="sasha blouse" data-grupo="Cuerpo de Exploración">
+        <p class="grupo g-expl">Cuerpo de Exploración</p>
+        <h3>Sasha Blouse</h3>
+        <p class="rol">Soldado</p>
+        <p>Cadete de la promoción 104. Famosa por su apetito, su puntería con el arco y su espontaneidad.</p>
+        
+        <p class="spoiler"><b>Spoiler</b>Su historia da un giro trágico en la temporada final.</p>
+        
+      </article>
+      
+      <article class="ficha" data-nombre="historia reiss" data-grupo="Cuerpo de Exploración">
+        <p class="grupo g-expl">Cuerpo de Exploración</p>
+        <h3>Historia Reiss</h3>
+        <p class="rol">Soldado</p>
+        <p>Cadete amable y reservada de la promoción 104.</p>
+        
+        <p class="spoiler"><b>Spoiler</b>Su verdadero nombre es distinto y pertenece a la familia real.</p>
+        
+      </article>
+      
+      <article class="ficha" data-nombre="reiner braun" data-grupo="Marley">
+        <p class="grupo g-marley">Marley</p>
+        <h3>Reiner Braun</h3>
+        <p class="rol">Soldado, guerrero</p>
+        <p>Soldado fuerte y confiable de la promoción 104, al que muchos ven como un hermano mayor.</p>
+        
+        <p class="spoiler"><b>Spoiler</b>Es portador del Titán Acorazado y vino de Marley con una misión.</p>
+        
+      </article>
+      
+      <article class="ficha" data-nombre="bertholdt hoover" data-grupo="Marley">
+        <p class="grupo g-marley">Marley</p>
+        <h3>Bertholdt Hoover</h3>
+        <p class="rol">Soldado, guerrero</p>
+        <p>Cadete alto y callado de la promoción 104, muy cercano a Reiner.</p>
+        
+        <p class="spoiler"><b>Spoiler</b>Es portador del Titán Colosal, el que abre la brecha en el Muro María.</p>
+        
+      </article>
+      
+      <article class="ficha" data-nombre="annie leonhart" data-grupo="Marley">
+        <p class="grupo g-marley">Marley</p>
+        <h3>Annie Leonhart</h3>
+        <p class="rol">Soldado, guerrera</p>
+        <p>Cadete de la promoción 104, hábil en combate cuerpo a cuerpo, que se une a la Policía Militar.</p>
+        
+        <p class="spoiler"><b>Spoiler</b>Es portadora del Titán Hembra.</p>
+        
+      </article>
+      
+      <article class="ficha" data-nombre="zeke jaeger" data-grupo="Marley">
+        <p class="grupo g-marley">Marley</p>
+        <h3>Zeke Jaeger</h3>
+        <p class="rol">Líder de los Guerreros</p>
+        <p>Líder de los Guerreros de Marley. Tiene una voz pausada y una mirada difícil de leer.</p>
+        
+        <p class="spoiler"><b>Spoiler</b>Es portador del Titán Bestia y medio hermano de Eren.</p>
+        
+      </article>
+      
+      <article class="ficha" data-nombre="pieck finger" data-grupo="Marley">
+        <p class="grupo g-marley">Marley</p>
+        <h3>Pieck Finger</h3>
+        <p class="rol">Guerrera</p>
+        <p>Guerrera de Marley, tranquila y observadora, que casi siempre se mueve a un costado del conflicto.</p>
+        
+        <p class="spoiler"><b>Spoiler</b>Es portadora del Titán Carguero.</p>
+        
+      </article>
+      
+      <article class="ficha" data-nombre="falco grice" data-grupo="Marley">
+        <p class="grupo g-marley">Marley</p>
+        <h3>Falco Grice</h3>
+        <p class="rol">Aspirante a guerrero</p>
+        <p>Joven aspirante a guerrero en Marley, amable y muy comprometido con sus amigos.</p>
+        
+        <p class="spoiler"><b>Spoiler</b>Hereda el poder del Titán Mandíbula.</p>
+        
+      </article>
+      
+      <article class="ficha" data-nombre="gabi braun" data-grupo="Marley">
+        <p class="grupo g-marley">Marley</p>
+        <h3>Gabi Braun</h3>
+        <p class="rol">Aspirante a guerrera</p>
+        <p>Aspirante a guerrera de Marley, decidida a ser elegida como la próxima portadora del Titán Acorazado.</p>
+        
+      </article>
+      
+    </div>
+    <p id="vacio" class="vacio" hidden>Ningún personaje coincide con tu búsqueda.</p>
+  </div>
+</section>
+
+<section id="titanes" class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Poderes heredados</p>
+    <h2>Los nueve titanes cambiantes</h2>
+    <p class="intro-sec">Cada titán cambiante tiene una habilidad propia. Los portadores aparecen como spoiler porque algunos se revelan avanzada la historia.</p>
+    <div class="titanes" id="lista-titanes">
+      
+      <article class="titan">
+        <h3>Titán Fundador</h3>
+        <p>Controla a otros titanes y puede alterar la memoria de los eldianos.</p>
+        <p class="spoiler"><b>Portador</b>Eren Jaeger</p>
+      </article>
+      
+      <article class="titan">
+        <h3>Titán de Ataque</h3>
+        <p>Comparte recuerdos entre sus portadores a lo largo del tiempo, incluso hacia el futuro.</p>
+        <p class="spoiler"><b>Portador</b>Eren Jaeger</p>
+      </article>
+      
+      <article class="titan">
+        <h3>Titán Colosal</h3>
+        <p>Mide 60 metros y libera vapor a una temperatura extrema al transformarse.</p>
+        <p class="spoiler"><b>Portador</b>Bertholdt Hoover, luego Armin Arlert</p>
+      </article>
+      
+      <article class="titan">
+        <h3>Titán Acorazado</h3>
+        <p>Placas endurecidas que cubren el cuerpo y resisten casi cualquier ataque.</p>
+        <p class="spoiler"><b>Portador</b>Reiner Braun</p>
+      </article>
+      
+      <article class="titan">
+        <h3>Titán Hembra</h3>
+        <p>Puede endurecer partes del cuerpo y atraer a otros titanes con su grito.</p>
+        <p class="spoiler"><b>Portador</b>Annie Leonhart</p>
+      </article>
+      
+      <article class="titan">
+        <h3>Titán Bestia</h3>
+        <p>Controla a titanes comunes con su voz y lanza proyectiles a gran distancia.</p>
+        <p class="spoiler"><b>Portador</b>Zeke Jaeger</p>
+      </article>
+      
+      <article class="titan">
+        <h3>Titán Mandíbula</h3>
+        <p>Es muy veloz, con mandíbulas y garras poderosas.</p>
+        <p class="spoiler"><b>Portador</b>Ymir, luego Porco Galliard y Falco Grice</p>
+      </article>
+      
+      <article class="titan">
+        <h3>Titán Carguero</h3>
+        <p>Tiene resistencia y movilidad suficientes para cargar equipo en misiones largas.</p>
+        <p class="spoiler"><b>Portador</b>Pieck Finger</p>
+      </article>
+      
+      <article class="titan">
+        <h3>Titán Martillo de Guerra</h3>
+        <p>Crea estructuras y armas de cristal a voluntad.</p>
+        <p class="spoiler"><b>Portador</b>La familia Tybur</p>
+      </article>
+      
+    </div>
+  </div>
+</section>
+
+<section id="escala" class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Alturas en metros</p>
+    <h2>Un titán contra el muro</h2>
+    <p class="intro-sec">Los titanes comunes miden entre 3 y 15 metros. Solo uno de los cambiantes supera la altura de los muros: el Colosal, con 10 metros más.</p>
+
+    <div class="escala">
+      <div class="ejey" aria-hidden="true">
+        
+        <span style="bottom: 0.0%">0</span>
+        
+        <span style="bottom: 16.667%">10</span>
+        
+        <span style="bottom: 33.333%">20</span>
+        
+        <span style="bottom: 50.0%">30</span>
+        
+        <span style="bottom: 66.667%">40</span>
+        
+        <span style="bottom: 83.333%">50</span>
+        
+        <span style="bottom: 100.0%">60</span>
+        
+      </div>
+      <div class="plano" role="img" aria-label="Gráfico de barras: Titán Colosal 60 metros; Titán Bestia 17 metros; Titán Acorazado 15 metros; Titán De Ataque 15 metros; Titán Hembra 14 metros. Los muros miden 50 metros.">
+        
+        <div class="guia" style="bottom: 16.667%"></div>
+        
+        <div class="guia" style="bottom: 33.333%"></div>
+        
+        <div class="guia" style="bottom: 50.0%"></div>
+        
+        <div class="guia" style="bottom: 66.667%"></div>
+        
+        <div class="guia" style="bottom: 83.333%"></div>
+        
+        <div class="guia" style="bottom: 100.0%"></div>
+        
+        <div class="muro-linea" style="bottom: 83.333%"><span>Muros · 50 m</span></div>
+        <div class="barras">
+          
+          <div class="barra sobre" style="--h: 100.0%">
+            <b>60 m</b>
+            <span>Colosal</span>
+          </div>
+          
+          <div class="barra " style="--h: 28.333%">
+            <b>17 m</b>
+            <span>Bestia</span>
+          </div>
+          
+          <div class="barra " style="--h: 25.0%">
+            <b>15 m</b>
+            <span>Acorazado</span>
+          </div>
+          
+          <div class="barra " style="--h: 25.0%">
+            <b>15 m</b>
+            <span>De Ataque</span>
+          </div>
+          
+          <div class="barra " style="--h: 23.333%">
+            <b>14 m</b>
+            <span>Hembra</span>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cronologia" class="sec">
+  <div class="wrap">
+    <p class="eyebrow">De 2009 a 2023</p>
+    <h2>Cronología de la obra</h2>
+    <ol class="linea">
+      
+      <li>
+        <p class="anio">2009</p>
+        <div>
+          <p class="mes">Septiembre</p>
+          <p>Hajime Isayama publica el primer capítulo del manga en Bessatsu Shōnen Magazine.</p>
+        </div>
+      </li>
+      
+      <li>
+        <p class="anio">2013</p>
+        <div>
+          <p class="mes">Abril</p>
+          <p>Wit Studio estrena la primera temporada del anime, con 25 episodios.</p>
+        </div>
+      </li>
+      
+      <li>
+        <p class="anio">2017</p>
+        <div>
+          <p class="mes">Abril</p>
+          <p>Llega la segunda temporada, de 12 episodios.</p>
+        </div>
+      </li>
+      
+      <li>
+        <p class="anio">2018</p>
+        <div>
+          <p class="mes">Julio</p>
+          <p>Estreno de la tercera temporada, de 22 episodios en dos partes.</p>
+        </div>
+      </li>
+      
+      <li>
+        <p class="anio">2020</p>
+        <div>
+          <p class="mes">Diciembre</p>
+          <p>Comienza The Final Season, ahora a cargo de MAPPA.</p>
+        </div>
+      </li>
+      
+      <li>
+        <p class="anio">2021</p>
+        <div>
+          <p class="mes">Abril</p>
+          <p>Termina el manga con el capítulo 139, en 34 tomos.</p>
+        </div>
+      </li>
+      
+      <li>
+        <p class="anio">2023</p>
+        <div>
+          <p class="mes">Noviembre</p>
+          <p>El anime concluye con el segundo especial de Los capítulos finales.</p>
+        </div>
+      </li>
+      
+    </ol>
+  </div>
+</section>
+
+<section id="quiz" class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Ponte a prueba</p>
+    <h2>Quiz del Cuerpo de Exploración</h2>
+    <div id="quiz-caja" class="quiz" aria-live="polite"></div>
+  </div>
+</section>
+
+<section id="bitacora" class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Solo para ti</p>
+    <h2>Bitácora del recluta</h2>
+    <p class="intro-sec">Anota teorías, episodios favoritos o lo que quieras recordar. Se guarda automáticamente en este navegador y no se comparte con nadie.</p>
+    <div class="campo campo-ancho">
+      <label for="bitacora-txt">Tus notas</label>
+      <textarea id="bitacora-txt" rows="6" placeholder="Escribe aquí…"></textarea>
+    </div>
+    <p id="bitacora-estado" class="estado" aria-live="polite"></p>
+  </div>
+</section>
+</main>
+
+<footer class="pie">
+  <div class="wrap">
+    <p>Sitio hecho por y para fans. Ataque a los Titanes (Shingeki no Kyojin) es una obra de Hajime Isayama, publicada por Kodansha. Este sitio no está afiliado a sus autores, estudios ni editoriales y no usa imágenes de la obra.</p>
+  </div>
+</footer>
+
+<script>
+window.PREGUNTAS = [{"correcta": 0, "nota": "El Muro María es el exterior; Rose es el intermedio y Sina el interior.", "opciones": ["Muro María", "Muro Rose", "Muro Sina", "Muro Trost"], "p": "¿Cómo se llama el muro más exterior?"}, {"correcta": 1, "nota": "Hajime Isayama lo publicó entre 2009 y 2021.", "opciones": ["Eiichiro Oda", "Hajime Isayama", "Tite Kubo", "Kohei Horikoshi"], "p": "¿Quién creó el manga?"}, {"correcta": 2, "nota": "Wit Studio hizo las tres primeras; MAPPA se encargó de la temporada final.", "opciones": ["MAPPA", "Bones", "Wit Studio", "Madhouse"], "p": "¿Qué estudio animó las tres primeras temporadas?"}, {"correcta": 1, "nota": "Son nueve, y cada uno tiene sus propias habilidades.", "opciones": ["Siete", "Nueve", "Doce", "Cinco"], "p": "¿Cuántos titanes cambiantes existen?"}, {"correcta": 1, "nota": "Cae en el año 845. En el 850 se ataca Trost, en el Muro Rose.", "opciones": ["743", "845", "850", "915"], "p": "¿Qué año cae el Muro María?"}, {"correcta": 2, "nota": "Reiner es el portador del Titán Acorazado.", "opciones": ["Titán Hembra", "Titán Colosal", "Titán Acorazado", "Titán Bestia"], "p": "¿Qué titán porta Reiner Braun?"}, {"correcta": 3, "nota": "Mide 60 metros, es decir, 10 más que los muros.", "opciones": ["15 metros", "30 metros", "50 metros", "60 metros"], "p": "¿Cuánto mide el Titán Colosal?"}, {"correcta": 2, "nota": "Ese título se le atribuye al capitán Levi.", "opciones": ["Erwin Smith", "Mikasa Ackerman", "Levi Ackerman", "Jean Kirstein"], "p": "¿Quién es considerado el soldado más fuerte de la humanidad?"}];
+window.RANGOS = [[0, "Recluta", "Aún estás entrenando. Revisa los personajes y vuelve a intentarlo."], [4, "Soldado", "Conoces lo básico. Te falta poco para el Cuerpo de Exploración."], [7, "Capitán", "Muy buen nivel. Casi no se te escapa nada."], [8, "Comandante", "Puntaje perfecto. Conoces la historia al detalle."]];
+</script>
+<script>
+(function () {
+  "use strict";
+
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  function leer(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function guardar(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* sin almacenamiento */ } }
+  function el(tag, clase, texto) {
+    var n = document.createElement(tag);
+    if (clase) n.className = clase;
+    if (texto != null) n.textContent = texto;
+    return n;
+  }
+
+  /* Tema claro / oscuro */
+  var raiz = document.documentElement;
+  var btnTema = $("#tema");
+  function oscuroAhora() {
+    var t = raiz.getAttribute("data-theme");
+    if (t) return t === "dark";
+    return window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+  var tg = leer("aot-tema");
+  if (tg === "dark" || tg === "light") raiz.setAttribute("data-theme", tg);
+  if (btnTema) {
+    btnTema.addEventListener("click", function () {
+      var n = oscuroAhora() ? "light" : "dark";
+      raiz.setAttribute("data-theme", n);
+      guardar("aot-tema", n);
+    });
+  }
+
+  /* Personajes: búsqueda, filtro por grupo y spoilers */
+  var rejilla = $("#rejilla");
+  var fichas = $$(".ficha", rejilla);
+  var buscar = $("#buscar");
+  var chips = $$(".chip");
+  var spoil = $("#spoilers");
+  var conteo = $("#conteo");
+  var vacio = $("#vacio");
+  var grupoActivo = "";
+
+  function norm(s) {
+    return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  }
+  function filtrar() {
+    var q = norm(buscar.value.trim());
+    var n = 0;
+    fichas.forEach(function (f) {
+      var okG = !grupoActivo || f.getAttribute("data-grupo") === grupoActivo;
+      var okQ = !q || norm(f.getAttribute("data-nombre")).indexOf(q) !== -1;
+      f.hidden = !(okG && okQ);
+      if (!f.hidden) n++;
+    });
+    conteo.textContent = "Mostrando " + n + " de " + fichas.length + " personajes";
+    vacio.hidden = n !== 0;
+  }
+  function aplicarSpoilers() {
+    var on = spoil.checked;
+    document.body.classList.toggle("con-spoilers", on);
+  }
+  if (buscar) buscar.addEventListener("input", filtrar);
+  chips.forEach(function (c) {
+    c.addEventListener("click", function () {
+      grupoActivo = c.getAttribute("data-grupo");
+      chips.forEach(function (o) { o.setAttribute("aria-pressed", o === c ? "true" : "false"); });
+      filtrar();
+    });
+  });
+  if (spoil) spoil.addEventListener("change", aplicarSpoilers);
+  filtrar();
+  aplicarSpoilers();
+
+  /* Quiz */
+  var caja = $("#quiz-caja");
+  var PREG = window.PREGUNTAS || [];
+  var RANGOS = window.RANGOS || [];
+  var idx = 0, puntos = 0;
+
+  function mezclar(a) {
+    var b = a.slice();
+    for (var i = b.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = b[i]; b[i] = b[j]; b[j] = t;
+    }
+    return b;
+  }
+  function rangoPara(p) {
+    var r = RANGOS[0];
+    RANGOS.forEach(function (x) { if (p >= x[0]) r = x; });
+    return r;
+  }
+  function pintarPregunta() {
+    var q = PREG[idx];
+    var correcta = q.opciones[q.correcta];
+    caja.textContent = "";
+
+    var prog = el("div", "q-prog");
+    prog.appendChild(el("span", null, "Pregunta " + (idx + 1) + " de " + PREG.length));
+    prog.appendChild(el("span", null, puntos + (puntos === 1 ? " punto" : " puntos")));
+    caja.appendChild(prog);
+
+    var barra = el("div", "q-barra");
+    var rel = el("i");
+    rel.style.width = (idx / PREG.length * 100) + "%";
+    barra.appendChild(rel);
+    caja.appendChild(barra);
+
+    caja.appendChild(el("h3", "q-p", q.p));
+
+    var ops = el("div", "q-ops");
+    var nota = el("p", "q-nota");
+    var fila = el("div", "q-fila");
+    var botones = [];
+
+    mezclar(q.opciones).forEach(function (texto) {
+      var b = el("button", "q-op", texto);
+      b.type = "button";
+      b.addEventListener("click", function () {
+        botones.forEach(function (x) {
+          x.disabled = true;
+          if (x.textContent === correcta) x.classList.add("ok");
+        });
+        if (texto === correcta) {
+          puntos++;
+          nota.textContent = "¡Correcto! " + q.nota;
+        } else {
+          b.classList.add("mal");
+          nota.textContent = "No era esa. " + q.nota;
+        }
+        var sig = el("button", "btn btn-p", idx + 1 < PREG.length ? "Siguiente" : "Ver resultado");
+        sig.type = "button";
+        sig.addEventListener("click", function () {
+          idx++;
+          if (idx < PREG.length) pintarPregunta(); else pintarFinal();
+        });
+        fila.appendChild(sig);
+        sig.focus();
+      });
+      botones.push(b);
+      ops.appendChild(b);
+    });
+    caja.appendChild(ops);
+    caja.appendChild(nota);
+    caja.appendChild(fila);
+  }
+  function pintarFinal() {
+    var r = rangoPara(puntos);
+    caja.textContent = "";
+    var f = el("div", "q-final");
+    f.appendChild(el("p", "eyebrow", "Tu rango"));
+    f.appendChild(el("p", "q-rango", r[1]));
+    f.appendChild(el("p", null, "Acertaste " + puntos + " de " + PREG.length + ". " + r[2]));
+    var otra = el("button", "btn btn-p", "Intentar de nuevo");
+    otra.type = "button";
+    otra.addEventListener("click", function () { idx = 0; puntos = 0; pintarPregunta(); });
+    var fila = el("div", "q-fila");
+    fila.appendChild(otra);
+    f.appendChild(fila);
+    caja.appendChild(f);
+  }
+  if (caja && PREG.length) pintarPregunta();
+
+  /* Bitácora */
+  var txt = $("#bitacora-txt");
+  var estado = $("#bitacora-estado");
+  if (txt) {
+    var previo = leer("aot-bitacora");
+    if (previo) txt.value = previo;
+    var temp;
+    txt.addEventListener("input", function () {
+      clearTimeout(temp);
+      temp = setTimeout(function () {
+        guardar("aot-bitacora", txt.value);
+        estado.textContent = "Guardado en este navegador";
+      }, 400);
+    });
+  }
+})();
+
+</script>
+
+</body></html>
